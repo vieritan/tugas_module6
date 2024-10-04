@@ -105,13 +105,13 @@ def delete_animal(id):
 # staff
 
 # GET
-@app.route('/staffs', methods=['GET'])
+@app.route('/employees', methods=['GET'])
 def get_staffs():
     staffs = load_staffs()
     return jsonify(staffs)
 
 # Retrieve a specific animal by ID
-@app.route('/staffs/<int:id>', methods=['GET'])
+@app.route('/employees/<int:id>', methods=['GET'])
 def get_staff_by_id(id):
     staffs = load_staffs()
     staff = next((a for a in staffs if a['id'] == id), None) # id yg ijo db dan id yg kuning postman(req)
@@ -120,7 +120,7 @@ def get_staff_by_id(id):
     return jsonify(staff)
 
 # POST
-@app.route('/staffs', methods=['POST'])
+@app.route('/employees', methods=['POST'])
 def add_staff():
     if not request.json or 'name' not in request.json:
         abort(400, description="Invalid request. 'species' is required")
@@ -144,7 +144,7 @@ def add_staff():
     return jsonify(new_staff), 201
 
 # PUT
-@app.route('/staffs/<int:id>', methods=['PUT'])
+@app.route('/employees/<int:id>', methods=['PUT'])
 def update_staff(id):
     staffs = load_staffs()
     staff = next((a for a in staffs if a['id'] == id), None)
@@ -165,7 +165,7 @@ def update_staff(id):
     return jsonify(staff)
 
 # Delete an animal
-@app.route('/staffs/<int:id>', methods=['DELETE'])
+@app.route('/employees/<int:id>', methods=['DELETE'])
 def delete_staff(id):
     staffs = load_animals()
     staff = next((a for a in staffs if a['id'] == id), None)

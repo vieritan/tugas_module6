@@ -123,18 +123,18 @@ def get_staff_by_id(id):
 @app.route('/employees', methods=['POST'])
 def add_staff():
     if not request.json or 'name' not in request.json:
-        abort(400, description="Invalid request. 'species' is required")
+        abort(400, description="Invalid request. 'name' is required")
     
     name = request.json.get('name')
     
     staffs = load_staffs()
     for staff in staffs:
         if staff['name'] == name:
-            return jsonify({"message": "name already exist"})
+            return jsonify({"message": "name already exist"}), 400
     new_staff = {
         'id': staffs[-1]['id'] + 1 if staffs else 1,
         'name': request.json.get('name'),
-        'email': request.json.get('email', 0),
+        'email': request.json.get('email', ''),
         'phone_number': request.json.get('phone_number', 'Unknown'),
         'role': request.json.get('role', ''),
         'schedule': request.json.get('schedule'),
@@ -149,7 +149,7 @@ def update_staff(id):
     staffs = load_staffs()
     staff = next((a for a in staffs if a['id'] == id), None)
     if staff is None:
-        abort(404, description="Animal not found")
+        abort(404, description="staff not found")
     
     if not request.json:
         abort(400, description="Invalid request format")
@@ -167,14 +167,14 @@ def update_staff(id):
 # Delete an animal
 @app.route('/employees/<int:id>', methods=['DELETE'])
 def delete_staff(id):
-    staffs = load_animals()
+    staffs = load_staffs()
     staff = next((a for a in staffs if a['id'] == id), None)
     if staff is None:
-        abort(404, description="Animal not found")
+        abort(404, description="staff not found")
     
     staffs.remove(staff)
-    save_animals(staffs)
-    return jsonify({'result': 'Animal deleted'})
+    save_staffs(staffs)
+    return jsonify({'result': 'staff deleted'})
 
 
 # Error handlers

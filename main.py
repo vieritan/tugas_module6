@@ -99,20 +99,27 @@ def delete_animal(id):
     save_animals(animals)
     return jsonify({'result': 'Animal deleted'})
 
-# Error handlers
-@app.errorhandler(404)
-def resource_not_found(e):
-    return jsonify(error=str(e)), 404
 
-@app.errorhandler(400)
-def bad_request(e):
-    return jsonify(error=str(e)), 400
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
+    
+###########################################################################################################      
 # staff
+
+# GET
+@app.route('/staffs', methods=['GET'])
+def get_staffs():
+    staffs = load_staffs()
+    return jsonify(staffs)
+
+# Retrieve a specific animal by ID
+@app.route('/staffs/<int:id>', methods=['GET'])
+def get_staff_by_id(id):
+    staffs = load_staffs()
+    staff = next((a for a in staffs if a['id'] == id), None) # id yg ijo db dan id yg kuning postman(req)
+    if staff is None:
+        abort(404, description="Animal not found")
+    return jsonify(staff)
+
+# POST
 @app.route('/staffs', methods=['POST'])
 def add_staff():
     if not request.json or 'name' not in request.json:
@@ -135,3 +142,49 @@ def add_staff():
     staffs.append(new_staff)
     save_staffs(staffs)
     return jsonify(new_staff), 201
+
+# PUT
+@app.route('/staffs/<int:id>', methods=['PUT'])
+def update_staff(id):
+    staffs = load_staffs()
+    staff = next((a for a in staffs if a['id'] == id), None)
+    if staff is None:
+        abort(404, description="Animal not found")
+    
+    if not request.json:
+        abort(400, description="Invalid request format")
+
+    staff['id'] = request.json.get('id', staff['id'])
+    staff['name'] = request.json.get('name', staff['name'])
+    staff['email'] = request.json.get('email', staff['email'])
+    staff['phone_number'] = request.json.get('phone_number', staff['phone_number'])
+    staff['role'] = request.json.get('role', staff['role'])
+    staff['schedule'] = request.json.get('schedule', staff['schedule'])
+
+    save_staffs(staffs)
+    return jsonify(staff)
+
+# Delete an animal
+@app.route('/staffs/<int:id>', methods=['DELETE'])
+def delete_staff(id):
+    staffs = load_animals()
+    staff = next((a for a in staffs if a['id'] == id), None)
+    if staff is None:
+        abort(404, description="Animal not found")
+    
+    staffs.remove(staff)
+    save_animals(staffs)
+    return jsonify({'result': 'Animal deleted'})
+
+
+# Error handlers
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+@app.errorhandler(400)
+def bad_request(e):
+    return jsonify(error=str(e)), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)

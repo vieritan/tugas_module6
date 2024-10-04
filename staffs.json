@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "name": "abc",
+        "email": "y@h.a",
+        "phone_number": "0812312313213",
+        "role": "manager",
+        "schedule": "pagi"
+    },
+    {
+        "name": "def",
+        "email": "b@u.a",
+        "phone_number": "0812312313213",
+        "role": "manager",
+        "schedule": "pagi"
+    },
+    {
+        "name": "fct",
+        "email": "p@q.a",
+        "phone_number": "0812312313213",
+        "role": "manager",
+        "schedule": "pagi"
+    }
+]

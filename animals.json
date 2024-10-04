@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "age": 21,
+        "gender": "laki - laki",
+        "id": 1,
+        "special_requirements": "jump",
+        "species": "dog"
+    },
+    {
+        "age": 22,
+        "gender": "laki - laki",
+        "id": 2,
+        "special_requirements": "cute",
+        "species": "cat"
+    },
+    {
+        "age": 21,
+        "gender": "perempuan",
+        "id": 3,
+        "special_requirements": "angry",
+        "species": "dog"
+    }
+]

@@ -116,7 +116,7 @@ def get_staff_by_id(id):
     staffs = load_staffs()
     staff = next((a for a in staffs if a['id'] == id), None) # id yg ijo db dan id yg kuning postman(req)
     if staff is None:
-        abort(404, description="Animal not found")
+        abort(404, description="ID not found")
     return jsonify(staff)
 
 # POST
